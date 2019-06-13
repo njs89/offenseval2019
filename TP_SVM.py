@@ -1,5 +1,5 @@
 """
-dev edition for svm
+edition for svm
 """
 import pandas as pd
 from sklearn import svm
@@ -62,7 +62,8 @@ def run_svr(X_train, X_dev, y_train, y_dev, count_vect):
     cf = classification_report(y_dev, prediction)
     print(cm)
     print(cf)
- 
+    most_informative_feature_for_binary_classification(count_vect, lin_clf)
+
     
 def get_array_length(array):
     """ 
@@ -152,12 +153,32 @@ def delete_null(old_X_train, old_y_train, old_X_dev, old_y_dev, task = "b"):
         
     return X_train, y_train, X_dev, y_dev
 
+def most_informative_feature_for_binary_classification(vectorizer, classifier, n=10):
+    """
+    prints the most important feature of each tweet ( a single word). 
+    Taken over from here:
+    https://stackoverflow.com/questions/26976362/how-to-get-most-informative-features-for-scikit-learn-classifier-for-different-c
+    """
+    class_labels = classifier.classes_
+    feature_names = vectorizer.get_feature_names()
+    topn_class1 = sorted(zip(classifier.coef_[0], feature_names))[:n]
+    topn_class2 = sorted(zip(classifier.coef_[0], feature_names))[-n:]
+
+    for coef, feat in topn_class1:
+        print (class_labels[0], coef, feat)
+
+    print()
+
+    for coef, feat in reversed(topn_class2):
+        print (class_labels[1], coef, feat)
+
 
 #label a OFF/NOT    
 X_train, y_train = get_training(training_data, task = "a")
 X_test, y_test = get_test(test_data, task ="a")
 X_vec, count_vect = vectorize(X_train)
 run_svr(X_vec, X_test, y_train, y_test, count_vect)
+
 
 #label b UNT/TIN/NaN  (untargeted, targeted, other)
 X_train, y_train = get_training(training_data, task = "b")

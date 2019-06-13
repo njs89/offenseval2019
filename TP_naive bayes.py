@@ -1,5 +1,5 @@
 """
-dev edition for naive bayes, change for final version into test, without dev set
+naive bayes classification
 """
 # https://scikit-learn.org/stable/auto_examples/text/plot_document_classification_20newsgroups.html#sphx-glr-auto-examples-text-plot-document-classification-20newsgroups-py
 import pandas as pd
@@ -122,6 +122,25 @@ def delete_null(old_X_train, old_y_train, old_X_dev, old_y_dev, task = "b"):
         
     return X_train, y_train, X_dev, y_dev
     
+def most_informative_feature_for_binary_classification(vectorizer, classifier, n=10):
+    """
+    prints the most important feature of each tweet ( a single word). 
+    Taken over from here:
+    https://stackoverflow.com/questions/26976362/how-to-get-most-informative-features-for-scikit-learn-classifier-for-different-c
+    """
+    class_labels = classifier.classes_
+    feature_names = vectorizer.get_feature_names()
+    topn_class1 = sorted(zip(classifier.coef_[0], feature_names))[:n]
+    topn_class2 = sorted(zip(classifier.coef_[0], feature_names))[-n:]
+
+    for coef, feat in topn_class1:
+        print (class_labels[0], coef, feat)
+
+    print()
+
+    for coef, feat in reversed(topn_class2):
+        print (class_labels[1], coef, feat)
+        
 data = "main"
 if data == "main": # i dont understand that
     #subtask a
@@ -133,10 +152,11 @@ if data == "main": # i dont understand that
     X_test = count_vect.transform(X_test)
     
     clf = train(X_train_vec, y_train)
-    print(y_test)
     evaluate(clf, X_test, y_test)
-    print("NB")    
+    most_informative_feature_for_binary_classification(count_vect, clf)
+
     
+    """
     #subtask b
     X_train, y_train = get_training(training_data, task = "b")
     X_test, y_test = get_test(test_data, task ="b")
@@ -146,7 +166,6 @@ if data == "main": # i dont understand that
     
     clf = train(X_train_vec, y_train)
     evaluate(clf, X_test, y_test)
-    print("NB")    
 
     #subtask c
     X_train, y_train = get_training(training_data, task = "c")
@@ -156,5 +175,4 @@ if data == "main": # i dont understand that
     X_test = count_vect.transform(X_test)
     
     clf = train(X_train_vec, y_train)
-    evaluate(clf, X_test, y_test)
-    print("NB")    
+    evaluate(clf, X_test, y_test)"""

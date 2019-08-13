@@ -6,19 +6,20 @@ The OLID Data set is already included. The classifiers can be run after the pyth
 
 files:
 
-created_files 		#file path for output of cnn and error analysis files
-Error Analysis 		#Error Analysis files from the paper
-OLIDv1.0 		#SemEval 2019 Task 6 corpus for training and test (the data is downloaded from here: https://competitions.codalab.org/competitions/20011#participate)
+1. created_files 		#file path for output of cnn and error analysis files
+2. Error Analysis 		#Error Analysis files from the paper
+3. OLIDv1.0 		#SemEval 2019 Task 6 corpus for training and test (the data is downloaded from here: https://competitions.codalab.org/competitions/20011#participate)
+
 -------------------------------
 
 python files:
 
-nb_utilys.py		contains all functions for the NB
-svm_utils.py		contains all functions for the SVM (some functions are the same as the NB)
-nb_semeval.py		run this file for the NB
-svm_semeval.py		run this file for the SVM
-cnn_semeval.py		run this file for the CNN (functions in the file)
-error_comparison.py	run this file AFTER the three classifiers, to create a file with the overlapping falsely classified tweets
+1. nb_utilys.py		contains all functions for the NB
+2. svm_utils.py		contains all functions for the SVM (some functions are the same as the NB)
+3. nb_semeval.py		run this file for the NB
+4. svm_semeval.py		run this file for the SVM
+5. cnn_semeval.py		run this file for the CNN (functions in the file)
+6. error_comparison.py	run this file AFTER the three classifiers, to create a file with the overlapping falsely classified tweets
 
 The files nb_utils.py and svm_utils.py will be imported into the other files.
 nb_semeval.py, svm_semeval.py and cnn_semeval.py can be activated in any order, as they do not interlink.
@@ -32,6 +33,7 @@ They also create files in the "created files" file, including error analysis fil
 
 
 error_comparison.py needs files created from all 3 classifiers, saved in the "created_files" file The results will also be stored in that file.
+
 -------------------------------
 
 Necessary packages for python:
@@ -42,4 +44,3 @@ The files were written with Anaconda Spyder 3.3.4 and python 3.6
 - scikit learn: https://scikit-learn.org/stable/install.html
 - numpy: is part of most python systems or can be installed following this guides: https://scipy.org/install.html
 - nltk: https://www.nltk.org/install.html
-
